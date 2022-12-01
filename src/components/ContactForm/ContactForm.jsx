@@ -1,8 +1,7 @@
-
 import React, {useState} from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getContacts } from "redux/selectors"
-import { addContact } from "redux/contactSlice"
+import { addContact } from "redux/operations"
 
 
 

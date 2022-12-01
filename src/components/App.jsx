@@ -1,11 +1,23 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
+import {ContactList} from './ContactList/ContactList';
+import {Filter} from './Filter/Filter';
+import { selectError, selectIsLoading } from 'redux/selectors';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/operations';
+
 
 
 export default function App() {
+  const dispatch = useDispatch()
+  const isLoading = useSelector(selectIsLoading)
+  const error = useSelector(selectError)
   
+  useEffect(() => { 
+    dispatch(fetchContacts())
+  }, [dispatch])
+
   return (
     <>
       <h1>Phonebook</h1>
@@ -14,49 +26,9 @@ export default function App() {
       <div>
         <h2>Contacts</h2>
         <Filter />
+        { isLoading && !error && <p>Loading...</p>}
         <ContactList />
       </div>
     </>
   );
 };
-  
-
-
-  // const [contacts, setContacts] = useLocalStorage(defaultContacts);
-  // const [filter, setFilter] = useState('');
-  
-  // const formSubmit = ({ name, number }) => {
-  //   const newContacts = {
-  //     id: nanoid(),
-  //     name,
-  //     number,
-  //   };
-
-  //   if (
-  //     contacts.find(option => option.name.toLowerCase() === name.toLowerCase())
-  //   ) {
-  //     alert(`${name} is already in contacts`);
-  //     return;
-  //   }
-  //   setContacts(prevState => [...prevState, newContacts]);
-  // };
-  
-
-  // const changeFilter = e => {
-  //   setFilter(e.currentTarget.value);
-  // };
-
-  // const deleteContact = contactId => {
-  //   setContacts(prevState => 
-  //     prevState.filter(contact => contact.id !== contactId)
-  //   );
-  // };
-
-  // const visibleContacts = contacts.filter(contact => {
-  //   return contact.name.toLowerCase().includes(filter.toLowerCase());
-  // })
-  
-
-
-
-
